@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import Layout from './components/Layout';
 import { Routes, Route } from 'react-router';
 import Home from './components/home/Home';
-import Header from './components/Header/Header';
+import Header from './components/header/Header';
+import Trailer from './components/Trailer/Trailer'
 
 function App() {
 
@@ -15,7 +16,7 @@ function App() {
     try {
       const response = await axios.get(urlBase);
       setMovies(response.data);
-    
+
 
     } catch (error) {
       console.log(error);
@@ -28,10 +29,11 @@ function App() {
 
   return (
     <div className="App">
-      <Header/>
+      <Header />
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route path='/' element={<Home movies={movies} />} />
+          <Route path="/trailer/:ytTrailerId" element={<Trailer />}></Route>
         </Route>
       </Routes>
     </div>
