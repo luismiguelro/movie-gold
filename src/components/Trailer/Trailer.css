@@ -1,3 +1,6 @@
+.react-player-container {
+    height: 90vh;
+}
 
 .loader {
     position: absolute;
@@ -6,11 +9,10 @@
     transform: translate(-50%, -50%);
     font-size: 20px;
     color: #ffffff;
-    background: gold;
+    background: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
+}
