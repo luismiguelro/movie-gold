@@ -1,68 +1,61 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import ReviewForm from '../reviewForm/ReviewForm';
-import React from 'react'
 
 const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
-
-    const urlBase = "http://localhost:8080/api/v1/reviews"
-    const revText = useRef();
-    let params = useParams();
+    const params = useParams();
     const movieId = params.movieId;
 
     useEffect(() => {
         getMovieData(movieId);
-    }, [])
+    }, [getMovieData, movieId]);
+
     return (
         <Container>
             <Row>
-                <Col><h3>Reviews</h3></Col>
-            </Row>
-            <Row className="mt-2">
                 <Col>
-                    <img src={movie?.poster} alt="" />
+                    <h3>Reviews</h3>
                 </Col>
-                <Col>
-                    {
-                        <>
-                            <Row>
-                                <Col>
-                                    <ReviewForm revText={revText} labelText="Write a Review?" />
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <hr />
-                                </Col>
-                            </Row>
-                        </>
-                    }
-                    {
-                        reviews?.map((r) => {
-                            return (
-                                <>
-                                    <Row>
-                                        <Col>{r.body}</Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <hr />
-                                        </Col>
-                                    </Row>
-                                </>
-                            )
-                        })
-                    }
+            </Row>
+            <Row className="mt-4">
+                <Col md={4}>
+                    {/* Apply styles for the movie poster */}
+                    <img src={movie?.poster} alt="" style={{
+                        width: '100%',
+                        borderRadius: '10px',
+                        border: '1px solid #ffd700', // Add border color and width
+                    }} />
+                </Col>
+                <Col md={8}>
+                    <Row>
+                        <Col>
+                            <ReviewForm labelText="Write a Review?" />
+                        </Col>
+                    </Row>
+                    <hr style={{ borderColor: '#ddd' }} />
+                    {reviews && reviews.length > 1 && (
+                        reviews.map((r, index) => (
+                            <div key={index}>
+                                <Row>
+                                    <Col>
+                                        {/* Apply styles for the review body */}
+                                        <p style={{ marginBottom: '0', fontSize: '16px' }}>{r.body}</p>
+                                    </Col>
+                                </Row>
+                                <hr style={{ borderColor: '#ddd' }} />
+                            </div>
+                        ))
+                    )}
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <hr />
+                    <hr style={{ borderColor: '#ddd' }} />
                 </Col>
             </Row>
         </Container>
-    )
+    );
 }
 
-export default Reviews
+export default Reviews;
