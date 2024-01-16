@@ -7,6 +7,7 @@ import Home from './components/home/Home';
 import Header from './components/header/Header';
 import Trailer from './components/Trailer/Trailer'
 import Reviews from './components/reviews/Reviews';
+
 function App() {
 
   const urlBase = "http://localhost:8080/api/v1/movies"
