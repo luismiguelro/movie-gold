@@ -8,7 +8,7 @@ import './WatchList.css'; // Importa tu archivo de estilo CSS
 
 function WatchList({ movies }) {
   return (
-    <div className="card-container d-flex flex-wrap justify-content-center">
+    <div className="card-container d-flex flex-wrap justify-content-start">
       {movies?.map((movie, index) => (
         <Card key={index} style={{ width: '18rem', margin: '10px' }} className="hover-card">
           <div className="image-container">
@@ -30,7 +30,7 @@ function WatchList({ movies }) {
           </div>
           <Card.Body>
             <Card.Title>{movie.title}</Card.Title>
-            <Card.Text>{new Date(movie.releaseDate).getFullYear()}</Card.Text>
+            <Card.Text>{new Date(movie.releasemovie).getFullYear()}</Card.Text>
           </Card.Body>
         </Card>
       ))}
