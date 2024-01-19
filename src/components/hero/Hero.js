@@ -1,5 +1,6 @@
+// Hero.js
 import React, { useState, useEffect } from 'react';
-import './Hero.css';
+import './Hero.css'
 import Carousel from 'react-material-ui-carousel';
 import { Paper } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,10 +12,8 @@ import { Button } from 'react-bootstrap';
 
 const Hero = ({ movies }) => {
   const navigate = useNavigate();
-
-
-
   const [loading, setLoading] = useState(true);
+  const [headerTitle, setHeaderTitle] = useState(''); // Declare headerTitle state here
 
   useEffect(() => {
     // Simulating a loading delay
@@ -25,13 +24,14 @@ const Hero = ({ movies }) => {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  const handleLinkClick = (movie) => {
+    // Set the header title and update the document title
+    setHeaderTitle(movie.title);
+  };
+
   function reviews(movieId) {
     navigate(`/reviews/${movieId}`);
   }
-
-  const handleLinkClick = (e) => {
-
-  };
 
   return (
     <div className='hero-container'>
@@ -49,22 +49,26 @@ const Hero = ({ movies }) => {
                     <div className='movie-title'>
                       <h4>{movie.title}</h4>
                     </div>
-                    <div className='movie-buttons-container'>
-                      <Link to={`trailer/${movie.trailerLink.substring(movie.trailerLink.length - 11)}`} style={{textDecoration:"none"}}>
+                    <div className='movie-buttons'>
+                      <Link
+                        to={`trailer/${movie.trailerLink.substring(movie.trailerLink.length - 11)}`}
+                        style={{ textDecoration: "none" }}
+                        onClick={() => handleLinkClick(movie)}
+                      >
                         <div className='play-button-icon-container'>
                           <FontAwesomeIcon className='play-button-icon' icon={faCirclePlay} />
-                          <span style={{color:"white", textDecoration:"none"}}>Watch Trailer</span>
+                          <span style={{ color: "white", textDecoration: "none" }}>Watch Trailer</span>
                         </div>
                       </Link>
-                      <Link to={movie.movieLink} target='_blank'style={{textDecoration:"none"}}>
+                      <Link to={movie.movieLink} target='_blank' style={{ textDecoration: "none" }}>
                         <div className='play-button-icon-container'>
                           <FontAwesomeIcon className='play-button-icon' icon={faVideo} />
-                          <span style={{color:"white", textDecoration:"none"}}>Watch Movie</span>
+                          <span style={{ color: "white", textDecoration: "none" }}>Watch Movie</span>
                         </div>
                       </Link>
-                     
+
                       <div className="movie-review-button-container">
-                        <Button variant="info" onClick={() => reviews(movie.imdbId)} >Reviews</Button>
+                        <Button variant="info" onClick={() => reviews(movie.imdbId)}>Reviews</Button>
                       </div>
                     </div>
 

@@ -8,23 +8,25 @@ import Header from './components/header/Header';
 import Trailer from './components/Trailer/Trailer'
 import Reviews from './components/reviews/Reviews';
 import WatchList from './components/watchList/WatchList';
+import Swal from 'sweetalert2'
 function App() {
 
-  const urlBase = "http://localhost:8080/api/v1/movies"
+  const urlBase = "https://api-movies.fly.dev/api/v1/movies"
   const [movies, setMovies] = useState();
   const [movie, setMovie] = useState();
   const [reviews, setReviews] = useState([]);
   const getMovies = async () => {
 
     try {
-
       const response = await axios.get(urlBase);
-
       setMovies(response.data);
-
     }
     catch (err) {
-      console.log(err);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err,
+      });
     }
   }
 
@@ -32,17 +34,16 @@ function App() {
 
     try {
       const response = await axios.get(`${urlBase}/${movieId}`);
-
       const singleMovie = response.data;
-
       setMovie(singleMovie);
-
       setReviews(singleMovie.reviews);
-
-
     }
     catch (error) {
-      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error,
+      });
     }
 
   }
@@ -59,7 +60,7 @@ function App() {
         <Route path='/' element={<Layout />}>
           <Route path='/' element={<Home movies={movies} />} />
           <Route path='/' element={<WatchList movies={movies}/>} />
-          <Route path="/trailer/:ytTrailerId" element={<Trailer />}></Route>
+          <Route path="/trailer/:ytTrailerId" element={<Trailer movies={movies} />}></Route>
           <Route path="/reviews/:movieId" element={<Reviews getMovieData={getMovieData} movie={movie} reviews={reviews} setReviews={setReviews} />}></Route>
           <Route path='/watchlist' element={ <WatchList movies={movies}/>} />
         </Route>

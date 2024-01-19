@@ -4,12 +4,14 @@ import './Trailer.css';
 import React, { useState, useEffect } from 'react';
 import Loader from '../constants/loader/Loader';
 
-const Trailer = () => {
+const Trailer = ({movies}) => {
   const [loading, setLoading] = useState(true);
   const [loaderTimeoutCompleted, setLoaderTimeoutCompleted] = useState(false);
 
   let params = useParams();
   let key = params.ytTrailerId;
+  
+
 
   const handleReady = () => {
     setLoading(false);
@@ -51,6 +53,7 @@ const Trailer = () => {
           onReady={handleReady}
           onBuffer={handleBuffer}
         />
+
       ) : null}
     </div>
   );
