@@ -72,6 +72,7 @@ const Hero = ({ movies }) => {
                       </div>
                     </div>
 
+
                   </div>
                 </div>
               </div>

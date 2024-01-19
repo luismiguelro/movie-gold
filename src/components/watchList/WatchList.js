@@ -7,14 +7,10 @@ import { faCirclePlay, faVideo } from '@fortawesome/free-solid-svg-icons';
 import './WatchList.css'; // Importa tu archivo de estilo CSS
 
 function WatchList({ movies }) {
-  
-  const handleLinkClick = (movie) => {
-    // Set the header title and update the document title
-    setHeaderTitle(movie.title);
-    document.title = `${movie.title} - Movies API`;
-  };
+
+
   return (
-    <div className="card-container d-flex flex-wrap justify-content-start">
+    <div className="card-container d-flex flex-wrap justify-content-center">
       {movies?.map((movie, index) => (
         <Card key={index} style={{ width: '18rem', margin: '10px' }} className="hover-card">
           <div className="image-container">
@@ -24,7 +20,6 @@ function WatchList({ movies }) {
                 <div className='play-button-icon-container'>
                   <FontAwesomeIcon className='play-button-icon' icon={faCirclePlay} />
                   <span style={{ color: "white", textDecoration: "none" }}
-                  onClick={() => handleLinkClick(movie)}
                   >Watch Trailer</span>
                 </div>
               </Link>

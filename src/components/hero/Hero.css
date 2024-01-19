@@ -98,12 +98,50 @@
     transform: translate(-50%, -50%);
 }
 
-
-
 @media only screen and (max-width: 800px) {
     .movie-detail {
         flex-direction: column;
         align-items: center;
         top: 20px;
+    }
+
+    .movie-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .play-button-icon-container {
+        margin-bottom: 5px;
+        /* Adjust the spacing between the icons and the button */
+    }
+
+    .movie-review-button-container {
+        text-align: center;
+        margin-top: 10px;
+        /* Adjust the spacing between the icons and the button */
+    }
+
+    .movie-poster:hover {
+        transform: none;
+        /* Remove the scaling effect */
+        cursor: auto;
+        /* Remove the pointer cursor on hover */
+    }
+
+    .movie-poster>img {
+        height: 100%;
+        width: 100%;
+        transition: none;
+        /* Remove the transition effect */
+    }
+
+    /* Remove the play button icon hover effect */
+    .play-button-icon:hover {
+        font-size: 3rem;
+        color: gold;
+    }
+    .movie-title {
+        margin-top: 5px;
+        margin-bottom: 10px;
     }
 }
