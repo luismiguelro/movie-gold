@@ -36,7 +36,8 @@ function App() {
       const response = await axios.get(`${urlBase}/${movieId}`);
       const singleMovie = response.data;
       setMovie(singleMovie);
-      setReviews(singleMovie.reviews);
+      setReviews(singleMovie.reviewIds);
+      console.log(singleMovie.reviewIds);
     }
     catch (error) {
       Swal.fire({
@@ -55,16 +56,16 @@ function App() {
   return (
     <div className="App">
       <Header />
-    
+
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route path='/' element={<Home movies={movies} />} />
-          <Route path='/' element={<WatchList movies={movies}/>} />
+          <Route path='/' element={<WatchList movies={movies} />} />
           <Route path="/trailer/:ytTrailerId" element={<Trailer movies={movies} />}></Route>
           <Route path="/reviews/:movieId" element={<Reviews getMovieData={getMovieData} movie={movie} reviews={reviews} setReviews={setReviews} />}></Route>
-          <Route path='/watchlist' element={ <WatchList movies={movies}/>} />
+          <Route path='/watchlist' element={<WatchList movies={movies} />} />
         </Route>
-        
+
       </Routes>
     </div>
   );
