@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
-const ReviewForm = ({ handleSubmit, labelText, defaultValue }) => {
+const ReviewForm = ({ handleSubmit, labelText, revText, defaultValue }) => {
   const placeholderOptions = [
     "Leave your review here...",
     "What did you think of the movie?",
@@ -25,11 +25,7 @@ const ReviewForm = ({ handleSubmit, labelText, defaultValue }) => {
     <Form>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Label>{placeholderOptions[currentPlaceholderIndex]}</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          defaultValue={defaultValue}
-        />
+        <Form.Control ref={revText} as="textarea" rows={3} defaultValue={defaultValue} />
       </Form.Group>
       <Button variant="outline-info" onClick={handleSubmit}>
         Submit

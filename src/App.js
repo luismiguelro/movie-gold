@@ -11,7 +11,7 @@ import WatchList from './components/watchList/WatchList';
 import Swal from 'sweetalert2'
 function App() {
 
-  const urlBase = "https://api-movies.fly.dev/api/v1/movies"
+  const urlBase = "http://localhost:8080/api/v1/movies"
   const [movies, setMovies] = useState();
   const [movie, setMovie] = useState();
   const [reviews, setReviews] = useState([]);

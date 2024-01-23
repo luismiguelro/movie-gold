@@ -5,9 +5,11 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import ReviewForm from '../reviewForm/ReviewForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownShortWide, faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2'
+import './Reviews.css'
 
 const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
-    const urlBase = 'https://api-movies.fly.dev/api/v1/reviews';
+    const urlBase = 'http://localhost:8080/api/v1/reviews';
     const revText = useRef();
     const params = useParams();
     const movieId = params.movieId;
@@ -17,19 +19,44 @@ const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
     useEffect(() => {
         getMovieData(movieId);
     }, [movieId]);
-
+    
     const addReview = async (e) => {
         e.preventDefault();
-        const rev = revText.current;
-
-        try {
-            const response = await axios.post(urlBase, { reviewBody: rev.value, imdbId: movieId });
-            const updatedReviews = [...reviews, { body: rev.value }];
-            setReviews(updatedReviews);
-        } catch (err) {
-            console.error(err);
+    
+        if (revText.current && revText.current.value.trim() !== '') {
+            const rev = revText.current;
+    
+            try {
+                const response = await axios.post(urlBase, { reviewBody: rev.value, imdbId: movieId });
+                const newReview = { body: rev.value, id: response.data };
+                // Actualiza primero las revisiones en el estado
+                setReviews((prevReviews) => [...prevReviews, newReview]);
+    
+                // Luego, vuelve a cargar los datos de la película
+                await getMovieData(movieId);
+    
+                // Limpia el campo de revisión después de agregar la revisión
+                rev.value = '';
+            } catch (err) {
+                console.error("Error adding review:", err);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Error",
+                });
+            }
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "",
+            });
         }
     };
+    
+
+
+
 
     const toggleSortOrder = () => {
         setSortOrder((prevSortOrder) => (prevSortOrder === 'desc' ? 'asc' : 'desc'));
@@ -76,16 +103,17 @@ const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
                             <FontAwesomeIcon icon={icon} onClick={toggleSortOrder} style={{ cursor: 'pointer' }} /> Order
                         </Col>
                     </Row>
-                    <Row className="mt-4">
+                    <Row className="mt-4 reviews-container">
                         {sortedReviews.length === 0 && (
                             <Col>
                                 <p>No review available. Be the first to write one!</p>
                             </Col>
                         )}
                         {sortedReviews.map((r) => {
+                            const uniqueKey = r.id.timestamp; // Reemplaza esto con el campo único de tu revisión
                             const reviewDate = new Date(r.id.date);
                             return (
-                                <React.Fragment key={r.id}>
+                                <React.Fragment key={uniqueKey}>
                                     <Row>
                                         <Col>
                                             <p style={{ marginBottom: '0', fontSize: '16px' }}>{r.body}</p>
