@@ -9,6 +9,7 @@ import Trailer from './components/Trailer/Trailer'
 import Reviews from './components/reviews/Reviews';
 import WatchList from './components/watchList/WatchList';
 import Swal from 'sweetalert2'
+import Footer from './components/constants/footer/Footer';
 function App() {
 
   const urlBase = "http://localhost:8080/api/v1/movies"
@@ -67,6 +68,7 @@ function App() {
         </Route>
 
       </Routes>
+      <Footer />
     </div>
   );
 }
