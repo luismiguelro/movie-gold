@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownShortWide, faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2'
 import './Reviews.css'
+import ReviewItem from './ReviewItem';
 
 const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
     const urlBase = 'http://localhost:8080/api/v1/reviews';
@@ -100,40 +101,22 @@ const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
                     </>
                     <Row className="mt-4">
                         <Col>
-                            <FontAwesomeIcon icon={icon} onClick={toggleSortOrder} style={{ cursor: 'pointer' }} /> Order
+                            <Button variant="light" onClick={toggleSortOrder} style={{ cursor: 'pointer' }}>
+                                <FontAwesomeIcon icon={icon} />
+                                {' '} Order
+                            </Button>
                         </Col>
                     </Row>
                     <Row className="mt-4 reviews-container">
-                        {sortedReviews.length === 0 && (
+                        {sortedReviews.length === 0 ? (
                             <Col>
-                                <p>No review available. Be the first to write one!</p>
+                                <p>No reviews available. Be the first to write one!</p>
                             </Col>
+                        ) : (
+                            sortedReviews.map((review) => (
+                                <ReviewItem key={review.id.timestamp} review={review} />
+                            ))
                         )}
-                        {sortedReviews.map((r) => {
-                            const uniqueKey = r.id.timestamp; // Reemplaza esto con el campo único de tu revisión
-                            const reviewDate = new Date(r.id.date);
-                            return (
-                                <React.Fragment key={uniqueKey}>
-                                    <Row>
-                                        <Col>
-                                            <p style={{ marginBottom: '0', fontSize: '16px' }}>{r.body}</p>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <small style={{ color: '#888', fontSize: '12px' }}>
-                                                {reviewDate.toLocaleString()}
-                                            </small>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <hr style={{ borderColor: '#ddd' }} />
-                                        </Col>
-                                    </Row>
-                                </React.Fragment>
-                            );
-                        })}
                     </Row>
                 </Col>
             </Row>

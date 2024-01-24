@@ -1,45 +1,41 @@
-// Hero.js
 import React, { useState, useEffect } from 'react';
-import './Hero.css'
+import './Hero.css';
 import Carousel from 'react-material-ui-carousel';
-import { Paper } from '@mui/material';
+import { Paper, Button } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlay, faFilm, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlay, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { Link, useHistory } from 'react-router-dom';
 import Loader from '../constants/loader/Loader';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 
 const Hero = ({ movies }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [headerTitle, setHeaderTitle] = useState(''); // Declare headerTitle state here
+  const [headerTitle, setHeaderTitle] = useState('');
 
   useEffect(() => {
-    // Simulating a loading delay
     const timeoutId = setTimeout(() => {
       setLoading(false);
-    }, 3000); // Simulating a 5-second loading delay
+    }, 3000);
 
     return () => clearTimeout(timeoutId);
   }, []);
 
   const handleLinkClick = (movie) => {
-    // Set the header title and update the document title
     setHeaderTitle(movie.title);
   };
 
-  function reviews(movieId) {
+  const goToReviews = (movieId) => {
     navigate(`/reviews/${movieId}`);
-  }
+  };
 
   return (
     <div className='hero-container'>
-      {loading && <Loader />} {/* Show the loader while loading */}
+      {loading && <Loader />}
       {!loading && (
         <Carousel>
           {movies?.map((movie) => (
-            <Paper key={movie.imdbId}>
+            <Paper key={movie.imdbId} >
               <div className='movie-card-container'>
                 <div className="movie-card" style={{ "--img": `url(${movie.backdrops[0]})` }}>
                   <div className="movie-detail">
@@ -66,13 +62,12 @@ const Hero = ({ movies }) => {
                           <span style={{ color: "white", textDecoration: "none" }}>Watch Movie</span>
                         </div>
                       </Link>
-
-                      <div className="movie-review-button-container">
-                        <Button variant="info" onClick={() => reviews(movie.imdbId)}>Reviews</Button>
+                      <div className="movie-review-button-container reviews-button">
+                        <Button variant="info" onClick={() => goToReviews(movie.imdbId)} className="reviews-button">
+                          Reviews
+                        </Button>
                       </div>
                     </div>
-
-
                   </div>
                 </div>
               </div>

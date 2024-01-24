@@ -4,45 +4,34 @@ import './Trailer.css';
 import React, { useState, useEffect } from 'react';
 import Loader from '../constants/loader/Loader';
 
-const Trailer = ({movies}) => {
+const Trailer = () => {
   const [loading, setLoading] = useState(true);
-  const [loaderTimeoutCompleted, setLoaderTimeoutCompleted] = useState(false);
+  const params = useParams();
+  const key = params.ytTrailerId;
 
-  let params = useParams();
-  let key = params.ytTrailerId;
-  
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setLoading(false);
+    }, 1000); // Tiempo de espera para el loader inicial (en milisegundos)
 
+    if (key) {
+      const videoTimeoutId = setTimeout(() => {
+        setLoading(false);
+      }, 2000); // Tiempo de espera para el video (en milisegundos)
 
-  const handleReady = () => {
-    setLoading(false);
-  };
+      return () => clearTimeout(videoTimeoutId);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [key]); // Si el valor de key cambia, reinicia el timeout
 
   const handleBuffer = () => {
     setLoading(true);
   };
 
-  useEffect(() => {
-    const loaderTimeoutId = setTimeout(() => {
-      setLoaderTimeoutCompleted(true);
-    }, 1000); // Adjust the duration as needed (in milliseconds)
-
-    return () => clearTimeout(loaderTimeoutId);
-  }, []); // Run the timeout effect only once
-
-  useEffect(() => {
-    if (loaderTimeoutCompleted && key) {
-      // If the loader timeout has completed and there is a video key
-      const videoTimeoutId = setTimeout(() => {
-        setLoading(false);
-      }, 2000); // Adjust the duration for the video loading (in milliseconds)
-
-      return () => clearTimeout(videoTimeoutId);
-    }
-  }, [loaderTimeoutCompleted, key]);
-
   return (
     <div className="react-player-container">
-      {loading && loaderTimeoutCompleted && <Loader />} {/* Show the Loader after initial timeout */}
+      {loading && <Loader />} {/* Muestra el loader durante la espera */}
       {key != null ? (
         <ReactPlayer
           controls={true}
@@ -50,10 +39,8 @@ const Trailer = ({movies}) => {
           url={`https://www.youtube.com/watch?v=${key}`}
           width="100%"
           height="100%"
-          onReady={handleReady}
           onBuffer={handleBuffer}
         />
-
       ) : null}
     </div>
   );

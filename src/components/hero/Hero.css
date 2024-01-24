@@ -98,6 +98,16 @@
     transform: translate(-50%, -50%);
 }
 
+.reviews-button {
+    background-color: #0dcaf0;
+    transition: 0.3s;
+    color: #fff;
+}
+
+.reviews-button:hover {
+    background-color: #0dcaf0d3;
+}
+
 @media only screen and (max-width: 800px) {
     .movie-detail {
         flex-direction: column;
@@ -140,8 +150,10 @@
         font-size: 3rem;
         color: gold;
     }
+
     .movie-title {
         margin-top: 5px;
         margin-bottom: 10px;
     }
+    
 }
