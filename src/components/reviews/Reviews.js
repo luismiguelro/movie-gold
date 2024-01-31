@@ -10,7 +10,7 @@ import './Reviews.css'
 import ReviewItem from './ReviewItem';
 
 const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
-    const urlBase = 'http://localhost:8080/api/v1/reviews';
+    const urlBase = 'https://api-movies.fly.dev/api/v1/reviews';
     const revText = useRef();
     const params = useParams();
     const movieId = params.movieId;
