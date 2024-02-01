@@ -82,6 +82,7 @@ const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
                 <Col md={4}>
                     <img src={movie?.poster} alt="" style={{
                         width: '100%',
+                        marginTop: '30px',
                         borderRadius: '10px',
                         border: '1px solid #ffd700', // Add border color and width
                     }} />
