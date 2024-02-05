@@ -4,7 +4,7 @@ FROM node:16-alpine
 # Set /app as the default work directory
 WORKDIR /app
 
-# copy package.json to the working directory for packages installation
+# copy only package.json first for caching dependencies
 COPY package.json /app
 
 # Install npm dependencies
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # run your app
-CMD ['yarn', 'run', 'start']
+CMD ['run', 'start']
