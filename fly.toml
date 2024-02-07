@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for movie-gold-v2 on 2024-02-02T09:47:40-05:00
+# fly.toml app configuration file generated for movie-gold on 2024-02-06T11:00:41-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'movie-gold-v2'
+app = 'movie-gold'
 primary_region = 'bog'
 
 [build]
