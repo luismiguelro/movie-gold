@@ -4,6 +4,7 @@ import './Trailer.css';
 import React, { useState, useEffect } from 'react';
 import Loader from '../constants/loader/Loader';
 
+
 const Trailer = () => {
   const [loading, setLoading] = useState(true);
   const params = useParams();
@@ -36,7 +37,7 @@ const Trailer = () => {
         <ReactPlayer
           controls={true}
           playing={true}
-          url={`https://www.youtube.com/watch?v=${key}`}
+          url="./prueba.m3u8"
           width="100%"
           height="100%"
           onBuffer={handleBuffer}
