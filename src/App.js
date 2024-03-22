@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axiosInstance from './components/api/axios';
 import './App.css';
 import { useEffect, useState } from 'react';
 import Layout from './components/Layout';
@@ -13,15 +13,15 @@ import Swal from 'sweetalert2'
 import Footer from './components/constants/footer/Footer';
 function App() {
 
-  const urlBase = "https://api-movies.fly.dev/api/v1/movies"
   const [movies, setMovies] = useState();
   const [movie, setMovie] = useState();
   const [reviews, setReviews] = useState([]);
   const getMovies = async () => {
 
     try {
-      const response = await axios.get(urlBase);
+      const response = await axiosInstance.get("/api/v1/movies");
       setMovies(response.data);
+      console.log(response);
     }
     catch (err) {
       Swal.fire({
