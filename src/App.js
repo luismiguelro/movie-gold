@@ -12,6 +12,7 @@ import WatchList from './components/watchList/WatchList';
 import Swal from 'sweetalert2'
 import Footer from './components/constants/footer/Footer';
 function App() {
+  const urlBase = "/api/v1/movies";
 
   const [movies, setMovies] = useState();
   const [movie, setMovie] = useState();
@@ -19,7 +20,7 @@ function App() {
   const getMovies = async () => {
 
     try {
-      const response = await axiosInstance.get("/api/v1/movies");
+      const response = await axiosInstance.get(urlBase);
       setMovies(response.data);
       console.log(response);
     }
@@ -35,11 +36,12 @@ function App() {
   const getMovieData = async (movieId) => {
 
     try {
-      const response = await axios.get(`${urlBase}/${movieId}`);
+      const response = await axiosInstance.get(`${urlBase}/${movieId}`);
       const singleMovie = response.data;
       setMovie(singleMovie);
       setReviews(singleMovie.reviewIds);
-      console.log(singleMovie.reviewIds);
+
+      
     }
     catch (error) {
       Swal.fire({

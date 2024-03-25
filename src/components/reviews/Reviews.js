@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import axiosInStance from '../../components/api/axios'
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import ReviewForm from '../reviewForm/ReviewForm';
+import ReviewForm from './reviewForm/ReviewForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownShortWide, faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2'
@@ -10,7 +10,7 @@ import './Reviews.css'
 import ReviewItem from './ReviewItem';
 
 const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
-    const urlBase = 'https://api-movies.fly.dev/api/v1/reviews';
+    const urlBase = '/api/v1/reviews';
     const revText = useRef();
     const params = useParams();
     const movieId = params.movieId;
@@ -28,7 +28,7 @@ const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
             const rev = revText.current;
     
             try {
-                const response = await axios.post(urlBase, { reviewBody: rev.value, imdbId: movieId });
+                const response = await axiosInStance.post(urlBase, { reviewBody: rev.value.trim(), imdbId: movieId });
                 const newReview = { body: rev.value, id: response.data };
                 // Actualiza primero las revisiones en el estado
                 setReviews((prevReviews) => [...prevReviews, newReview]);
@@ -50,13 +50,11 @@ const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "",
+                text: "No se permiten reviews en blanco!",
             });
         }
     };
     
-
-
 
 
     const toggleSortOrder = () => {
@@ -70,7 +68,7 @@ const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
             return new Date(b.id.date) - new Date(a.id.date);
         }
     });
-
+    console.log(reviews);
     return (
         <Container>
             <Row>
