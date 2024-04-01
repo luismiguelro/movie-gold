@@ -3,8 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVideoSlash } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import { Container, Navbar, Nav, Button } from "react-bootstrap";
-
+import { useNavigate } from 'react-router-dom';
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleRegister = () => {
+ 
+      navigate('/register');
+  };
+  const handleLogin = () => {
+    navigate('/login');
+};
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
@@ -17,8 +26,8 @@ const Header = () => {
             <NavLink className="nav-link" to="/">Home</NavLink>
             <NavLink className="nav-link" to="/watchList">Watch List</NavLink>
           </Nav>
-          <Button variant="outline-info" className="me-2">Login</Button>
-          <Button variant="outline-info">Register</Button>
+          <Button variant="outline-info" onClick={handleLogin}>Login</Button>
+          <Button variant="outline-info" onClick={handleRegister}>Register</Button>
         </Navbar.Collapse>
       </Container>
     </Navbar>

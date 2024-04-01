@@ -11,6 +11,8 @@ import Reviews from './components/reviews/Reviews';
 import WatchList from './components/watchList/WatchList';
 import Swal from 'sweetalert2'
 import Footer from './components/constants/footer/Footer';
+import RegisterForm from './components/form/register/Register';
+import LoginForm from './components/form/login/Login';
 function App() {
   const urlBase = "/api/v1/movies";
 
@@ -68,6 +70,8 @@ function App() {
           <Route path="/trailer/:ytTrailerId" element={<Trailer movies={movies} />}></Route>
           <Route path="/reviews/:movieId" element={<Reviews getMovieData={getMovieData} movie={movie} reviews={reviews} setReviews={setReviews} />}></Route>
           <Route path='/watchlist' element={<WatchList movies={movies} />} />
+          <Route path='/register' element={<RegisterForm/>} />
+          <Route path='/login' element={<LoginForm/>} />
         </Route>
 
       </Routes>

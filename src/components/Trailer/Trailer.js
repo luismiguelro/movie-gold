@@ -37,7 +37,7 @@ const Trailer = () => {
         <ReactPlayer
           controls={true}
           playing={true}
-          url="./prueba.m3u8"
+          url={`https://www.youtube.com/watch?v=${key}`}
           width="100%"
           height="100%"
           onBuffer={handleBuffer}
