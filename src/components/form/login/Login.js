@@ -1,54 +1,41 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import axiosInstance from '../../api/axios';
+import { jwtDecode } from 'jwt-decode' // import dependency
 
-const LoginForm = () => {
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastName] = useState('');
+
+const LoginForm = ({ onLogin,  setUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         try {
-            const response = await axiosInstance.post('/api/v1/auth/register', {
-                firstname: capitalizeFirstLetter(firstname.trim()),
-                lastname: capitalizeFirstLetter(lastname.trim()),
+            axiosInstance.post('/api/v1/auth/authenticate', {
                 email: email.toLowerCase(),
                 password: password
-            });
-         
-    
-            // Handle server response
-            console.log('Registration successful:', response.data);
-            
+            })
+            .then(res =>{
+                const token = res.data.token;
+                const user = jwtDecode(token); // decode token
+                console.log(user);
+                setUser(user)
+            })
+
+           
         } catch (error) {
             // Handle request errors
-            console.error('Registration error:', error.response);
+        
             setError(error.response);
         }
     };
-    
 
-    // Function to capitalize the first letter of a string
-    const capitalizeFirstLetter = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    };
     return (
         <div>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formBasicFirstName">
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control type="text" placeholder="First Name" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicLastName">
-                    <Form.Label>Last Name</Form.Label>
-                    <Form.Control type="text" placeholder="Last Name" value={lastname} onChange={(e) => setLastname(e.target.value)} />
-                </Form.Group>
-
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -60,7 +47,7 @@ const LoginForm = () => {
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
-                    Register
+                    Login
                 </Button>
             </Form>
         </div>

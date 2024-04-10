@@ -42,10 +42,11 @@ const RegisterForm = () => {
             } else {
                 setError('Unexpected response from server');
                 setSuccessMessage('');
-                console.log(response);
+               
             }
         } catch (error) {
             handleRequestError(error);
+            console.log(error);
         }
     };
 
@@ -61,8 +62,7 @@ const RegisterForm = () => {
 
     const handleRequestError = (error) => {
         if (error.response) {
-            setError(error.response.data.message || 'Email already exists.');
-            console.log(error.response);
+            setError(error.response.data);
         } else if (error.request) {
             setError('No response received. Please check your internet connection.');
         } else {
