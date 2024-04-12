@@ -13,9 +13,10 @@ import Swal from 'sweetalert2'
 import Footer from './components/constants/footer/Footer';
 import RegisterForm from './components/form/register/Register';
 import LoginForm from './components/form/login/Login';
+import { useNavigate } from 'react-router-dom';
 function App() {
   const urlBase = "/api/v1/movies";
-
+  const navigate = useNavigate();
   const [movies, setMovies] = useState();
   const [movie, setMovie] = useState();
   const [reviews, setReviews] = useState([]);
@@ -28,7 +29,8 @@ function App() {
 
   // Función para cerrar sesión
   const handleLogout = () => {
-    setUser(null); // Limpiar la información del usuario al cerrar sesión
+    setUser(null);
+    navigate('/'); // Limpiar la información del usuario al cerrar sesión
   };
   const getMovies = async () => {
 
@@ -83,11 +85,11 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route path='/' element={<Home movies={movies} />} />
+          <Route path='/' element={<Home movies={movies} user={user} />} />
           <Route path='/' element={<WatchList movies={movies} />} />
           <Route path="/trailer/:ytTrailerId" element={<Trailer movies={movies} />}></Route>
           <Route path='/watchlist' element={<WatchList movies={movies} />} />
-          <Route path='/register' element={<RegisterForm />} />
+          <Route path='/register' element={<RegisterForm setUser={setUser} />} />
           <Route path='/login' element={<LoginForm setUser={setUser} />} />
           <Route path="/reviews/:movieId" element={<Reviews getMovieData={getMovieData} movie={movie} reviews={reviews} setReviews={setReviews} user={user} />}></Route>
         </Route>
