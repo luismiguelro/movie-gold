@@ -1,10 +1,27 @@
+/* eslint-disable */
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVideoSlash } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import { Container, Navbar, Nav, Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ onLogout,user }) => {
+  const navigate = useNavigate();
+
+  const handleRegister = () => {
+      navigate('/register');
+  };
+
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
+  const handleLogout = () => {
+    // Llamar a la función de cierre de sesión proporcionada por el componente principal
+    onLogout();
+  };
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
@@ -17,8 +34,20 @@ const Header = () => {
             <NavLink className="nav-link" to="/">Home</NavLink>
             <NavLink className="nav-link" to="/watchList">Watch List</NavLink>
           </Nav>
-          <Button variant="outline-info" className="me-2">Login</Button>
-          <Button variant="outline-info">Register</Button>
+          {/* Mostrar diferentes opciones dependiendo del estado de inicio de sesión */}
+          {user ? (
+            <>
+              <Nav>
+                <Nav.Link disabled style={{ color: "white" }}>Welcome, {user.sub}</Nav.Link>
+              </Nav>
+              <Button variant="outline-danger" onClick={handleLogout}>Logout</Button>
+            </>
+          ) : (
+            <>
+              <Button variant="outline-info" onClick={handleLogin}>Login</Button>
+              <Button variant="outline-info" onClick={handleRegister}>Register</Button>
+            </>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

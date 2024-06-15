@@ -4,11 +4,11 @@ import Carousel from 'react-material-ui-carousel';
 import { Paper, Button } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlay, faVideo } from '@fortawesome/free-solid-svg-icons';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Loader from '../constants/loader/Loader';
 import { useNavigate } from 'react-router-dom';
 
-const Hero = ({ movies }) => {
+const Hero = ({ movies, user }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [headerTitle, setHeaderTitle] = useState('');
@@ -62,11 +62,13 @@ const Hero = ({ movies }) => {
                           <span style={{ color: "white", textDecoration: "none" }}>Watch Movie</span>
                         </div>
                       </Link>
-                      <div className="movie-review-button-container reviews-button">
-                        <Button variant="info" onClick={() => goToReviews(movie.imdbId)} className="reviews-button">
-                          Reviews
-                        </Button>
-                      </div>
+                      {user && (
+                        <div className="movie-review-button-container reviews-button">
+                          <Button variant="info" onClick={() => goToReviews(movie.imdbId)} className="reviews-button">
+                            Reviews
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import './Trailer.css';
 import React, { useState, useEffect } from 'react';
 import Loader from '../constants/loader/Loader';
 
+
 const Trailer = () => {
   const [loading, setLoading] = useState(true);
   const params = useParams();

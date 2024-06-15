@@ -19,7 +19,7 @@ const ReviewForm = ({ handleSubmit, labelText, revText, defaultValue }) => {
 
     // Clear the interval on component unmount
     return () => clearInterval(interval);
-  }, []); // Empty dependency array so it only runs once
+  }, [placeholderOptions.length]); // Incluir placeholderOptions.length en el array de dependencias
 
   return (
     <Form>
